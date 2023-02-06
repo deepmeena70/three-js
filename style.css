@@ -1,0 +1,35 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: blue;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+#threejs {
+  position: fixed;
+}
+
+video {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: -1;
+  width: 100%;
+}
+
+.text {
+  z-index: 99;
+  color: white;
+  position: absolute;
+  font-size: 4rem;
+  top: 80vh;
+  left: 50%;
+  transform: translateX(-50%);
+}/*# sourceMappingURL=style.css.map */
