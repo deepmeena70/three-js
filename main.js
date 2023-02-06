@@ -31,7 +31,7 @@ import WebGL from 'capabilities'; //check capabilites of broser by checking supp
     texture.repeat.set(1, 1);
   });
 
-  // this is the main thing a renderer which is use for rendering our objects or simply a canvas { <canvas></canvas> }
+  // this is the main thing a renderer which is use for rendering our objects or simply a <canvas></canvas>
   const renderer = new THREE.WebGLRenderer({ alpha: true }); //if alpha is true then the background will be transparent
   renderer.setSize(window.innerWidth, window.innerHeight); //set renderer size
   const container = document.getElementById('threejs'); //this is our container in which our object animates
@@ -47,7 +47,7 @@ import WebGL from 'capabilities'; //check capabilites of broser by checking supp
   const g4 = new THREE.ConeGeometry(400, 2000, 40, 80);
   const g5 = new THREE.TorusKnotGeometry(560, 50, 1000, 400, 15, 14);
 
-  //material
+  //materials
   const m1 = new THREE.MeshBasicMaterial({
     color: 'white',
     map: t1,
@@ -70,7 +70,7 @@ import WebGL from 'capabilities'; //check capabilites of broser by checking supp
 
   const shapesArr = [s1, s2, s3, s4, s5];
 
-  const btnEl = document.querySelectorAll('.btn');
+  const btnEl = document.querySelectorAll('.shape-btn');
 
   //add shapes to scene
   for (let i = 0; i < btnEl.length; i++) {
@@ -117,4 +117,17 @@ import WebGL from 'capabilities'; //check capabilites of broser by checking supp
   };
 
   addEventListener('resize', onWindowResize);
+
+  const vidBtn = document.querySelector('.vid-btn');
+
+  const toggleVideo = () => {
+    const vid = document.querySelector('video');
+    if (vid.classList.contains('disable')) {
+      vid.removeAttribute('class', 'disable');
+    } else {
+      vid.setAttribute('class', 'disable');
+    }
+  };
+
+  vidBtn.addEventListener('click', toggleVideo);
 })();
