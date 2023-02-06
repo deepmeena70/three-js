@@ -124,10 +124,10 @@ import WebGL from 'capabilities'; //check capabilites of broser by checking supp
     const vid = document.querySelector('video');
     if (vid.classList.contains('disable')) {
       vid.removeAttribute('class', 'disable');
-      vidBtn.innerHTML = 'Enable Video';
+      vidBtn.innerHTML = 'Disable Background';
     } else {
       vid.setAttribute('class', 'disable');
-      vidBtn.innerHTML = 'Disable Video';
+      vidBtn.innerHTML = 'Enable Background';
     }
   };
 
