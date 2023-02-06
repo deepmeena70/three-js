@@ -29,27 +29,38 @@ import WebGL from 'capabilities';
 
   // geometries
   const g1 = new THREE.BoxGeometry(1000, 1000, 1000);
-  const g2 = new THREE.SphereGeometry(1000, 1000, 1000);
-  const g3 = new THREE.CapsuleGeometry(400, 1000, 40, 80);
-  const g4 = new THREE.ConeGeometry(400, 1000, 40, 80);
+  const g2 = new THREE.SphereGeometry(700, 700, 700);
+  const g3 = new THREE.CapsuleGeometry(300, 1000, 40, 80);
+  const g4 = new THREE.ConeGeometry(400, 2000, 40, 80);
   const g5 = new THREE.TorusKnotGeometry(560, 50, 1000, 400, 15, 14);
+
+  //material
   const material = new THREE.MeshBasicMaterial({
     color: 'white',
     map: texture,
   });
 
   // shapes
-  const s1 = new THREE.Mesh(g1, material);
-  const s2 = new THREE.Mesh(g2, material);
-  const s3 = new THREE.Mesh(g3, material);
-  const s4 = new THREE.Mesh(g4, material);
-  const s5 = new THREE.Mesh(g5, material);
+  const s1 = new THREE.Mesh(g1, material); //creates square
+  const s2 = new THREE.Mesh(g2, material); //creates sphere
+  const s3 = new THREE.Mesh(g3, material); //creates capsule
+  const s4 = new THREE.Mesh(g4, material); //creates cone
+  const s5 = new THREE.Mesh(g5, material); //creates torus
 
-  // scene.add(s1);
-  // scene.add(s2);
-  // scene.add(s3);
-  // scene.add(s4);
-  scene.add(s5);
+  const shapesArr = [s1, s2, s3, s4, s5];
+
+  const btnEl = document.querySelectorAll('.btn');
+
+  //add shapes to scene
+  for (let i = 0; i < btnEl.length; i++) {
+    scene.add(s1); //create box
+    btnEl[i].addEventListener('click', () => {
+      //create on demand shapes
+      console.log('clicked', btnEl[i]);
+      shapesArr.forEach((shape) => scene.remove(shape));
+      scene.add(shapesArr[i]);
+    });
+  }
 
   controls.update();
 
@@ -61,7 +72,9 @@ import WebGL from 'capabilities';
 
   const animate = () => {
     requestAnimationFrame(animate);
-    shape_updater(s5);
+    shapesArr.forEach((shape) => {
+      shape_updater(shape);
+    });
     controls.update();
     renderer.render(scene, camera);
   };
@@ -69,10 +82,10 @@ import WebGL from 'capabilities';
   //   check WebGL support by browsers
   if (WebGL.isWebGLAvailable()) {
     // Initiate function or other initializations here
-    animate(s4);
+    animate();
   } else {
     const warning = WebGL.getWebGLErrorMessage();
-    document.getElementById('container').appendChild(warning);
+    document.getElementById('threejs').appendChild(warning);
   }
 
   const onWindowResize = () => {
