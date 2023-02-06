@@ -1,11 +1,14 @@
 import * as THREE from 'three';
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import WebGL from 'capabilities';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js'; //orbit controls a three js addons module for controlling
+import WebGL from 'capabilities'; //check capabilites of broser by checking support form WebGL
 
 (() => {
   console.log('javascript is running...');
+
+  //we will create a scene first in which we will add shapes later
   const scene = new THREE.Scene();
 
+  //set camera
   const camera = new THREE.PerspectiveCamera(
     80,
     window.innerWidth / window.innerHeight,
@@ -13,16 +16,26 @@ import WebGL from 'capabilities';
     10000
   );
 
-  const texture = new THREE.TextureLoader().load('textures/pb-abs-1.jpg');
+  //load all textures by loading different images
+  const t1 = new THREE.TextureLoader().load('textures/square_texture_1.jpg');
+  const t2 = new THREE.TextureLoader().load('textures/pb-abs-1.jpg');
+  const t3 = new THREE.TextureLoader().load('textures/capsule.jpg');
 
-  texture.wrapS = THREE.RepeatWrapping;
-  texture.wrapT = THREE.RepeatWrapping;
-  texture.repeat.set(1, 1);
+  //textures array created
+  const textures = [t1, t2, t3];
 
-  const renderer = new THREE.WebGLRenderer({ alpha: true });
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  const container = document.getElementById('threejs');
-  container.appendChild(renderer.domElement);
+  // set texture wrap and repeat for all texutures in textures array.
+  textures.forEach((texture) => {
+    texture.wrapS = THREE.RepeatWrapping;
+    texture.wrapT = THREE.RepeatWrapping;
+    texture.repeat.set(1, 1);
+  });
+
+  // this is the main thing a renderer which is use for rendering our objects or simply a canvas { <canvas></canvas> }
+  const renderer = new THREE.WebGLRenderer({ alpha: true }); //if alpha is true then the background will be transparent
+  renderer.setSize(window.innerWidth, window.innerHeight); //set renderer size
+  const container = document.getElementById('threejs'); //this is our container in which our object animates
+  container.appendChild(renderer.domElement); //now append to canvas to threejs container
 
   const controls = new OrbitControls(camera, renderer.domElement);
   camera.position.set(1000, 1000, 1000);
@@ -35,17 +48,25 @@ import WebGL from 'capabilities';
   const g5 = new THREE.TorusKnotGeometry(560, 50, 1000, 400, 15, 14);
 
   //material
-  const material = new THREE.MeshBasicMaterial({
+  const m1 = new THREE.MeshBasicMaterial({
     color: 'white',
-    map: texture,
+    map: t1,
+  });
+  const m2 = new THREE.MeshBasicMaterial({
+    color: 'white',
+    map: t2,
+  });
+  const m3 = new THREE.MeshBasicMaterial({
+    color: 'white',
+    map: t3,
   });
 
   // shapes
-  const s1 = new THREE.Mesh(g1, material); //creates square
-  const s2 = new THREE.Mesh(g2, material); //creates sphere
-  const s3 = new THREE.Mesh(g3, material); //creates capsule
-  const s4 = new THREE.Mesh(g4, material); //creates cone
-  const s5 = new THREE.Mesh(g5, material); //creates torus
+  const s1 = new THREE.Mesh(g1, m1); //creates square
+  const s2 = new THREE.Mesh(g2, m2); //creates sphere
+  const s3 = new THREE.Mesh(g3, m3); //creates capsule
+  const s4 = new THREE.Mesh(g4, m1); //creates cone
+  const s5 = new THREE.Mesh(g5, m2); //creates torus
 
   const shapesArr = [s1, s2, s3, s4, s5];
 
